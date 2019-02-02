@@ -153,8 +153,15 @@ void takeTemperatureHumidityDHTSensorReading()
       delay(dht.getMinimumSamplingPeriod());
       
       humidityValue = dht.getHumidity();
+      
+      if (isnan(humidityValue))
+        humidityValue = 0;
+        
       temperatureValue = dht.getTemperature();
 
+      if (isnan(temperatureValue))
+        temperatureValue = 0;
+        
       if (isDebugMode)
       {
         Serial.println("Humidity:");

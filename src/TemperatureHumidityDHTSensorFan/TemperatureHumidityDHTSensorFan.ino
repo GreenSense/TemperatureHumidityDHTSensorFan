@@ -9,7 +9,7 @@
 #define SERIAL_MODE_CSV 1
 #define SERIAL_MODE_QUERYSTRING 2
 
-#define VERSION "1-0-0-0"
+#define VERSION "1-0-0-1"
 
 int serialMode = SERIAL_MODE_CSV;
 
@@ -139,6 +139,12 @@ void serialPrintData()
     if (serialMode == SERIAL_MODE_CSV)
     {
       Serial.print("D;"); // This prefix indicates that the line contains data.
+      Serial.print("A:");
+      Serial.print((int)temperatureValue);
+      Serial.print("c ");
+      Serial.print((int)humidityValue);
+      Serial.print("%");
+      Serial.print(";");
       Serial.print("T:");
       Serial.print(temperatureValue);
       Serial.print(";");
