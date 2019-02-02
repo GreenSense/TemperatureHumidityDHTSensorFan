@@ -70,13 +70,19 @@ void checkCommand()
 
     switch (letter)
     {
-      case 'P':
+      case 'F':
         setFanStatus(msg);
         break;
-      case 'T':
+      case 'S':
+        setMinTemperature(msg);
+        break;
+      case 'U':
         setMaxTemperature(msg);
         break;
-      case 'H':
+      case 'G':
+        setMinHumidity(msg);
+        break;
+      case 'J':
         setMaxHumidity(msg);
         break;
       case 'I':
@@ -84,16 +90,6 @@ void checkCommand()
         break;
       case 'X':
         restoreDefaultSettings();
-        break;
-      case 'N':
-        Serial.println("Turning fan on");
-        fanStatus = FAN_STATUS_ON;
-        fanOn();
-        break;
-      case 'F':
-        Serial.println("Turning fan off");
-        fanStatus = FAN_STATUS_OFF;
-        fanOff();
         break;
       case 'A':
         Serial.println("Turning fan to auto");
@@ -142,20 +138,20 @@ void serialPrintData()
       Serial.print("T:");
       Serial.print(temperatureValue);
       Serial.print(";");
-      Serial.print("MxT:");
+      Serial.print("U:");
       Serial.print(maxTemperature);
       Serial.print(";");
-      Serial.print("MnT:");
+      Serial.print("S:");
       Serial.print(minTemperature);
       Serial.print(";");
       Serial.print("H:");
       Serial.print(humidityValue);
       Serial.print(";");
-      Serial.print("MxH:");
-      Serial.print(maxHumidity);
-      Serial.print(";");
-      Serial.print("MnH:");
+      Serial.print("G:");
       Serial.print(minHumidity);
+      Serial.print(";");
+      Serial.print("J:");
+      Serial.print(maxHumidity);
       Serial.print(";");
       Serial.print("F:");
       Serial.print(fanStatus);
