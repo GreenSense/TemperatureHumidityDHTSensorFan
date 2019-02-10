@@ -45,8 +45,6 @@ void loop()
   ventilateIfNeeded();
 
   serialPrintLoopFooter();
-
-  delay(1);
 }
 
 /* Commands */
@@ -70,8 +68,14 @@ void checkCommand()
 
     switch (letter)
     {
+      case 'T':
+        setTemperature(msg);
+        break;
+      case 'H':
+        setHumidity(msg);
+        break;
       case 'F':
-        setFanStatus(msg);
+        setFanMode(msg);
         break;
       case 'S':
         setMinTemperature(msg);
@@ -91,10 +95,8 @@ void checkCommand()
       case 'X':
         restoreDefaultSettings();
         break;
-      case 'A':
-        Serial.println("Turning fan to auto");
-        fanStatus = FAN_STATUS_AUTO;
-        ventilateIfNeeded();
+      case 'D':
+        temperatureHumidityDHTSensorIsEnabled = false;
         break;
       case 'Z':
         Serial.println("Toggling IsDebug");
@@ -160,7 +162,7 @@ void serialPrintData()
       Serial.print(maxHumidity);
       Serial.print(";");
       Serial.print("F:");
-      Serial.print(fanStatus);
+      Serial.print(fanMode);
       Serial.print(";");
       Serial.print("I:");
       Serial.print(temperatureHumidityDHTSensorReadingIntervalInSeconds);
@@ -190,8 +192,8 @@ void serialPrintData()
       Serial.print("waterNeeded=");
       Serial.print(temperatureHumidityLevelCalibrated < maxTemperature);
       Serial.print("&");
-      Serial.print("fanStatus=");
-      Serial.print(fanStatus);
+      Serial.print("fanMode=");
+      Serial.print(fanMode);
       Serial.print("&");
       Serial.print("readingInterval=");
       Serial.print(temperatureHumidityDHTSensorReadingIntervalInSeconds);

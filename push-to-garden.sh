@@ -7,7 +7,7 @@ DESTINATION_PROJECT_PATH=$1
 if [ -z "$DESTINATION_PROJECT_PATH" ]; then
   echo "Destination folder not specified as an argument."
   echo "  Using default..."
-  DESTINATION_PROJECT_PATH="~/projects/greensense/SoilMoistureSensorPump1602LCD"
+  DESTINATION_PROJECT_PATH="~/projects/greensense/SoilMoistureSensorFan1602LCD"
   echo "    $DESTINATION_PROJECT_PATH"
 fi
 

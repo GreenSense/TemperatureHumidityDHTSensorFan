@@ -1,6 +1,6 @@
 . ./common.sh
 
-DESTINATION_PROJECT_PATH="~/projects/tmp/greensense/SoilMoistureSensorPump1602LCD"
+DESTINATION_PROJECT_PATH="~/projects/tmp/greensense/SoilMoistureSensorFan1602LCD"
 
 sh push-to-garden.sh $DESTINATION_PROJECT_PATH && \
 

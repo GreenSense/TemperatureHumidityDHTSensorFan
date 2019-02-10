@@ -38,7 +38,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 		public int ResetTriggerPin = 4;
 
-		public string IrrigatorStartText = "Starting irrigator";
+		public string VentilatorStartText = "Starting DHT ventilator";
 
 		public HardwareTestHelper()
 		{
@@ -189,7 +189,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			ConnectDevice ();
 
 			// Ensure the irrigator restarted
-			WaitForText (IrrigatorStartText);
+			WaitForText (VentilatorStartText);
 		}
 		#endregion
 
@@ -197,6 +197,13 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		public virtual void WriteToDevice(string text)
 		{
 			DeviceClient.WriteLine(text);
+		}
+		#endregion
+
+		#region Write to Simultor Functions
+		public virtual void WriteToSimulator(string text)
+		{
+			SimulatorClient.Client.WriteLine(text);
 		}
 		#endregion
 
@@ -228,6 +235,19 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			ConsoleWriteSerialOutput(output);
 			Console.WriteLine("");
 		}
+
+		public string ReadLineFromSimulator()
+		{
+			Console.WriteLine("Reading a line of the output from the simulator...");
+
+			// Read the output
+			var output = SimulatorClient.Client.ReadLine();
+
+			ConsoleWriteSerialOutput(output);
+
+			return output;
+		}
+
 		#endregion
 
 		#region Console Write Functions

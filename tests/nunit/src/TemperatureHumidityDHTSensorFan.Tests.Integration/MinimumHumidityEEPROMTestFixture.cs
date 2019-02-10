@@ -11,14 +11,14 @@ using System.IO.Ports;
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
 	[TestFixture(Category = "Integration")]
-	public class PumpBurstOnTimeCommandTestFixture : BaseTestFixture
+	public class MinimumHumidityEEPROMTestFixture : BaseTestFixture
 	{
 		[Test]
-		public void Test_SetPumpBurstOnTime_1Seconds()
+		public void Test_SetMinimumHumidity_25()
 		{
-			using (var helper = new PumpBurstOnTimeCommandTestHelper())
+			using (var helper = new MinimumHumidityEEPROMTestHelper())
 			{
-				helper.PumpBurstOnTime = 1;
+				helper.MinimumHumidity = 25;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -26,16 +26,16 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestPumpBurstOnTimeCommand();
+				helper.TestMinimumHumidityEEPROM();
 			}
 		}
 
 		[Test]
-		public void Test_SetPumpBurstOnTime_5Seconds()
+		public void Test_SetMinimumHumidity_40()
 		{
-			using (var helper = new PumpBurstOnTimeCommandTestHelper())
+			using (var helper = new MinimumHumidityEEPROMTestHelper())
 			{
-				helper.PumpBurstOnTime = 5;
+				helper.MinimumHumidity = 40;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -43,8 +43,9 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestPumpBurstOnTimeCommand();
+				helper.TestMinimumHumidityEEPROM();
 			}
 		}
+
 	}
 }

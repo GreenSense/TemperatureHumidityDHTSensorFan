@@ -17,7 +17,7 @@ bool fanIsOn = 0;
 long fanStartTime = 0;
 long lastFanFinishTime = 0;
 
-int fanStatus = FAN_STATUS_AUTO;
+int fanMode = FAN_MODE_AUTO;
 
 #define maxTemperatureIsSetEEPROMFlagAddress 20
 #define maxTemperatureEEPROMAddress 21
@@ -135,7 +135,7 @@ void ventilateIfNeeded()
     Serial.println("Ventilating (if needed)");
   }
 
-  if (fanStatus == FAN_STATUS_AUTO)
+  if (fanMode == FAN_MODE_AUTO)
   {
     bool ventilationIsNeeded = checkVentilationIsNeeded();
     bool fanIsReady = true; // lastFanFinishTime + secondsToMilliseconds(fanBurstOffTime) < millis() || lastFanFinishTime == 0; // TODO: Reimplement
@@ -157,7 +157,7 @@ void ventilateIfNeeded()
       fanOn();
     }
   }
-  else if(fanStatus == FAN_STATUS_ON)
+  else if(fanMode == FAN_MODE_ON)
   {
     if (!fanIsOn)
       fanOn();
@@ -230,7 +230,7 @@ void fanOff()
   lastFanFinishTime = millis();
 }
 
-void setFanStatus(char* msg)
+void setFanMode(char* msg)
 {
   int length = strlen(msg);
 
@@ -246,13 +246,13 @@ void setFanStatus(char* msg)
 //    Serial.println("Value:");
 //    Serial.println(value);
 
-    setFanStatus(value);
+    setFanMode(value);
   }
 }
 
-void setFanStatus(int newStatus)
+void setFanMode(int newStatus)
 {
-  fanStatus = newStatus;
+  fanMode = newStatus;
 }
 
 void setMaxTemperature(char* msg)
@@ -295,7 +295,7 @@ int getMaxTemperature()
 
     if (isDebugMode)
     {
-      Serial.print("MaxTemperature found in EEPROM: ");
+      Serial.print("Max temperature found in EEPROM: ");
       Serial.println(maxTemperature);
     }
 
@@ -327,8 +327,7 @@ void setMinTemperature(int newMinTemperature)
 
   EEPROM.write(minTemperatureEEPROMAddress, newMinTemperature);
   
-  // TODO: Uncomment
-  //setEEPROMFlag(minTemperatureIsSetEEPROMFlagAddress);
+  setEEPROMFlag(minTemperatureIsSetEEPROMFlagAddress);
 }
 
 int getMinTemperature()
@@ -344,7 +343,7 @@ int getMinTemperature()
 
     if (isDebugMode)
     {
-      Serial.print("MinTemperature found in EEPROM: ");
+      Serial.print("Min temperature found in EEPROM: ");
       Serial.println(minTemperature);
     }
 
@@ -392,7 +391,7 @@ int getMaxHumidity()
 
     if (isDebugMode)
     {
-      Serial.print("MaxHumidity found in EEPROM: ");
+      Serial.print("Max humidity found in EEPROM: ");
       Serial.println(maxHumidity);
     }
 
@@ -415,13 +414,13 @@ void setMinHumidity(int newMinHumidity)
 
   if (isDebugMode)
   {
-    Serial.print("Setting min temperature to EEPROM: ");
+    Serial.print("Setting min humidity to EEPROM: ");
     Serial.println(minHumidity);
   }
 
   EEPROM.write(minHumidityEEPROMAddress, newMinHumidity);
   
-  setEEPROMFlag(minTemperatureIsSetEEPROMFlagAddress);
+  setEEPROMFlag(minHumidityIsSetEEPROMFlagAddress);
 }
 
 int getMinHumidity()
@@ -437,7 +436,7 @@ int getMinHumidity()
 
     if (isDebugMode)
     {
-      Serial.print("MinHumidity found in EEPROM: ");
+      Serial.print("Min humidity found in EEPROM: ");
       Serial.println(minHumidity);
     }
 

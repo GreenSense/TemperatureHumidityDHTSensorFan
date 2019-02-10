@@ -62,7 +62,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 		public string GetDevicePort()
 		{
-			var devicePort = Environment.GetEnvironmentVariable("IRRIGATOR_PORT");
+			var devicePort = Environment.GetEnvironmentVariable("VENTILATOR_PORT");
 
 			if (String.IsNullOrEmpty(devicePort))
 				devicePort = "/dev/ttyUSB0";
@@ -74,7 +74,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 		public string GetSimulatorPort()
 		{
-			var simulatorPort = Environment.GetEnvironmentVariable("IRRIGATOR_SIMULATOR_PORT");
+			var simulatorPort = Environment.GetEnvironmentVariable("VENTILATOR_SIMULATOR_PORT");
 
 			if (String.IsNullOrEmpty(simulatorPort))
 				simulatorPort = "/dev/ttyUSB1";
@@ -86,7 +86,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 		public int GetDeviceSerialBaudRate()
 		{
-			var baudRateString = Environment.GetEnvironmentVariable ("IRRIGATOR_BAUD_RATE");
+			var baudRateString = Environment.GetEnvironmentVariable ("VENTILATOR_BAUD_RATE");
 			
 			var baudRate = 0;
 			
@@ -102,7 +102,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 		public int GetSimulatorSerialBaudRate()
 		{
-			var baudRateString = Environment.GetEnvironmentVariable ("IRRIGATOR_SIMULATOR_BAUD_RATE");
+			var baudRateString = Environment.GetEnvironmentVariable ("VENTILATOR_SIMULATOR_BAUD_RATE");
 			
 			var baudRate = 0;
 			

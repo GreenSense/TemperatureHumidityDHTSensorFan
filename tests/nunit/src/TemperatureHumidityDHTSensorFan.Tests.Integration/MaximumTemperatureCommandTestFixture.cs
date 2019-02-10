@@ -11,14 +11,14 @@ using System.IO.Ports;
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
 	[TestFixture(Category = "Integration")]
-	public class ReadIntervalEEPROMTestFixture : BaseTestFixture
+	public class MaximumTemperatureCommandTestFixture : BaseTestFixture
 	{
 		[Test]
-		public void Test_SetReadInterval_1sec()
+		public void Test_SetMaximumTemperature_15()
 		{
-			using (var helper = new ReadIntervalEEPROMTestHelper())
+			using (var helper = new MaximumTemperatureCommandTestHelper())
 			{
-				helper.ReadInterval = 1;
+				helper.MaximumTemperature = 15;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -26,16 +26,16 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestReadIntervalEEPROM();
+				helper.TestMaximumTemperatureCommand();
 			}
 		}
 
 		[Test]
-		public void Test_SetReadInterval_3sec()
+		public void Test_SetMaximumTemperature_25()
 		{
-			using (var helper = new ReadIntervalEEPROMTestHelper())
+			using (var helper = new MaximumTemperatureCommandTestHelper())
 			{
-				helper.ReadInterval = 3;
+				helper.MaximumTemperature = 25;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -43,9 +43,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestReadIntervalEEPROM();
+				helper.TestMaximumTemperatureCommand();
 			}
 		}
-
 	}
 }

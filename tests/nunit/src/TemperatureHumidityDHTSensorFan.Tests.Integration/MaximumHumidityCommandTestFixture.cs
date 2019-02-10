@@ -11,14 +11,14 @@ using System.IO.Ports;
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
 	[TestFixture(Category = "Integration")]
-	public class ThresholdEEPROMTestFixture : BaseTestFixture
+	public class MaximumHumidityCommandTestFixture : BaseTestFixture
 	{
 		[Test]
-		public void Test_SetThreshold_25Percent()
+		public void Test_SetMaximumHumidity_15()
 		{
-			using (var helper = new ThresholdEEPROMTestHelper())
+			using (var helper = new MaximumHumidityCommandTestHelper())
 			{
-				helper.Threshold = 25;
+				helper.MaximumHumidity = 15;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -26,16 +26,16 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestThresholdEEPROM();
+				helper.TestMaximumHumidityCommand();
 			}
 		}
 
 		[Test]
-		public void Test_SetThreshold_40Percent()
+		public void Test_SetMaximumHumidity_25()
 		{
-			using (var helper = new ThresholdEEPROMTestHelper())
+			using (var helper = new MaximumHumidityCommandTestHelper())
 			{
-				helper.Threshold = 40;
+				helper.MaximumHumidity = 25;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
@@ -43,9 +43,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.SimulatorPort = GetSimulatorPort();
 				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
 
-				helper.TestThresholdEEPROM();
+				helper.TestMaximumHumidityCommand();
 			}
 		}
-
 	}
 }

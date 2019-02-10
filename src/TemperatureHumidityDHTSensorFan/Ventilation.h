@@ -6,9 +6,9 @@
 
 #define FAN_PIN 11
 
-#define FAN_STATUS_OFF 0
-#define FAN_STATUS_ON 1
-#define FAN_STATUS_AUTO 2
+#define FAN_MODE_OFF 0
+#define FAN_MODE_ON 1
+#define FAN_MODE_AUTO 2
 
 extern int maxTemperature;
 extern int minTemperature;
@@ -18,7 +18,7 @@ extern int minHumidity;
 extern bool fanIsOn;
 extern long fanStartTime;
 extern long lastFanFinishTime;
-extern int fanStatus;
+extern int fanMode;
 
 extern int maxTemperatureIsSetEEPROMFlagAddress;
 extern int maxTemperatureEEPROMAddress;
@@ -36,8 +36,8 @@ void setupVentilation();
 void fanOn();
 void fanOff();
 
-void setFanStatus(char* msg);
-void setFanStatus(int newStatus);
+void setFanMode(char* msg);
+void setFanMode(int newMode);
 
 void ventilateIfNeeded();
 bool checkVentilationIsNeeded();
