@@ -68,12 +68,6 @@ void checkCommand()
 
     switch (letter)
     {
-      case 'T':
-        setTemperature(msg);
-        break;
-      case 'H':
-        setHumidity(msg);
-        break;
       case 'F':
         setFanMode(msg);
         break;
@@ -95,12 +89,19 @@ void checkCommand()
       case 'X':
         restoreDefaultSettings();
         break;
-      case 'D':
-        temperatureHumidityDHTSensorIsEnabled = false;
-        break;
       case 'Z':
         Serial.println("Toggling IsDebug");
         isDebugMode = !isDebugMode;
+        break;
+      // The following are only used for automated testing to bypass the sensor
+      case 'T':
+        setTemperature(msg);
+        break;
+      case 'H':
+        setHumidity(msg);
+        break;
+      case 'D':
+        temperatureHumidityDHTSensorIsEnabled = false;
         break;
     }
     forceSerialOutput();
