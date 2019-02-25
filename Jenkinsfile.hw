@@ -16,14 +16,14 @@ pipeline {
                 sh "git fetch --no-tags"
                 sh 'git checkout $BRANCH_NAME'
                 sh 'git pull origin $BRANCH_NAME'
-                sh 'git config --global user.email "compulsivecoder@gmail.com"'
-                sh 'git config --global user.name "CompulsiveCoder CI"'
+                sh 'echo "Ventilator port: ${VENTILATOR_PORT}"'
+                sh 'echo "Ventilator simulator port: ${VENTILATOR_SIMULATOR_PORT}"'
             }
         }
         stage('Prepare') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh prepare.sh'
+                sh 'echo "Skipped prepare script." #sh prepare.sh'
             }
         }
         stage('Init') {
