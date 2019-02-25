@@ -41,13 +41,13 @@ pipeline {
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh build-uno.sh'
+                sh 'sh build-tests.sh'
             }
         }
         stage('Upload') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh upload-uno.sh'
+                sh 'sh upload-uno.sh ${VENTILATOR_PORT}'
             }
         }
         stage('Upload simulator') {
