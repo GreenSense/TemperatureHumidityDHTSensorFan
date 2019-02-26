@@ -4,6 +4,11 @@ pipeline {
         disableConcurrentBuilds();
     }
     stages {
+        stage('CleanWS') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm

@@ -133,9 +133,17 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			}
 
 			SimulatorIsEnabled = true;
+			
+      EnsureSimulatorIsNotResettingDevice ();
 
 			Console.WriteLine("");
 		}
+		
+    public void EnsureSimulatorIsNotResettingDevice ()
+    {
+        // Set the reset trigger pin to INPUT_PULLUP mode to avoid resetting the device
+        SimulatorClient.PinMode (ResetTriggerPin, PinMode.INPUT_PULLUP);
+    }
 
 		public void DisconnectDevice()
 		{
