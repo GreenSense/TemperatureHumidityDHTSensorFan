@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    triggers {
-       pollSCM('*/10 * * * *')
-    }
     options {
         disableConcurrentBuilds();
     }
@@ -16,8 +13,8 @@ pipeline {
                 sh "git fetch --no-tags"
                 sh 'git checkout $BRANCH_NAME'
                 sh 'git pull origin $BRANCH_NAME'
-                sh 'git config --global user.email "compulsivecoder@gmail.com"'
-                sh 'git config --global user.name "CompulsiveCoder CI"'
+                sh 'echo "Ventilator port: ${VENTILATOR_PORT}"'
+                sh 'echo "Ventilator simulator port: ${VENTILATOR_SIMULATOR_PORT}"'
             }
         }
         stage('Prepare') {
@@ -38,16 +35,10 @@ pipeline {
                 sh 'sh inject-version.sh'
             }
         }
-        stage('Build') {
-            when { expression { !shouldSkipBuild() } }
-            steps {
-                sh 'sh build-uno.sh'
-            }
-        }
         stage('Upload') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh upload-uno.sh'
+                sh 'sh upload-uno.sh ${VENTILATOR_PORT}'
             }
         }
         stage('Upload simulator') {
