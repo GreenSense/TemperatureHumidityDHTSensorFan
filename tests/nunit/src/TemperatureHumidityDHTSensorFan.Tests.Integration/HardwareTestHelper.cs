@@ -159,6 +159,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			Thread.Sleep(DelayAfterConnectingToHardware);
 
 			WaitForText(DataPrefix);
+
+			ReadFromDeviceAndOutputToConsole();
 		}
 
 		public void HandleConnectionIOException(string deviceLabel, string devicePort, int deviceBaudRate, Exception exception)
@@ -351,13 +353,9 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 					containsData = true;
 					dataLine = lastLine;
 				}
-
-				var hasTimedOut = DateTime.Now.Subtract(startTime).TotalSeconds > TimeoutWaitingForResponse;
-				if (hasTimedOut && !containsData)
+				else
 				{
-					ConsoleWriteSerialOutput(output);
-
-					Assert.Fail("Timed out waiting for data (" + TimeoutWaitingForResponse + " seconds)");
+					Timeout.Check(TimeoutWaitingForResponse, "Timed out waiting for data");
 				}
 			}
 
@@ -374,6 +372,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 			var startTime = DateTime.Now;
 			var timeInSeconds = 0.0;
+
+			Timeout.Start();
 
 			while (!containsData)
 			{
