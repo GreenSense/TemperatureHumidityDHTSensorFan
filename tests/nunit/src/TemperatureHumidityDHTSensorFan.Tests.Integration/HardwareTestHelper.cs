@@ -23,11 +23,12 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		public int SimulatorBaudRate = 0;
 
 		public int DelayAfterConnectingToHardware = 500;
+		public int DelayAfterDisconnectingFromHardware = 500;
 
 		public string DataPrefix = "D;";
 		public string DataPostFix = ";;";
 
-		public int TimeoutWaitingForResponse = 20;
+		public int TimeoutWaitingForResponse = 20 * 1000;
 
 		public int AnalogPinMaxValue = 1023;
 
@@ -39,6 +40,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		public int ResetTriggerPin = 4;
 
 		public string VentilatorStartText = "Starting DHT ventilator";
+
+		public TimeoutHelper Timeout = new TimeoutHelper();
 
 		public HardwareTestHelper()
 		{
@@ -163,13 +166,15 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			if (exception.Message == "No such file or directory")
 				throw new Exception("The " + deviceLabel + " device not found on port: " + devicePort + ". Please ensure it's connected via USB and that the port name is set correctly.", exception);
 			else if (exception.Message == "Inappropriate ioctl for device")
-				throw new Exception("The device serial baud rate appears to be incorrect: " + deviceBaudRate, exception);
+				throw new Exception ("The device serial baud rate appears to be incorrect: " + deviceBaudRate, exception);
+			else if (exception.Message == "No such device or address")
+				throw new Exception ("The " + deviceLabel + " device not found on port: " + devicePort + ". Please ensure it's connected via USB and that the port name is set correctly.", exception);
 			else
 				throw exception;
 		}
 		#endregion
 
-		#region Write to Device Functions
+		#region Reset Functions
 		public virtual void ResetDeviceViaPin()
 		{
 			// Close the connection to the device
@@ -253,9 +258,12 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		#region Console Write Functions
 		public void ConsoleWriteSerialOutput(string output)
 		{
-			Console.WriteLine("---------- Serial Output From Device -----------");
-			Console.WriteLine(output);
-			Console.WriteLine("------------------------------------------------");
+			if (!String.IsNullOrEmpty(output))
+			{
+				Console.WriteLine("----- Serial Output From Device");
+				Console.WriteLine(output);
+				Console.WriteLine("-------------------------------");
+			}
 		}
 		#endregion
 
@@ -298,7 +306,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			var output = String.Empty;
 			var containsText = false;
 
-			var startTime = DateTime.Now;
+			Timeout.Start();
 
 			while (!containsText)
 			{
@@ -310,14 +318,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 					containsText = true;
 				}
-
-				var hasTimedOut = DateTime.Now.Subtract(startTime).TotalSeconds > TimeoutWaitingForResponse;
-				if (hasTimedOut && !containsText)
-				{
-					ConsoleWriteSerialOutput(output);
-
-					Assert.Fail("Timed out waiting for text (" + TimeoutWaitingForResponse + " seconds)");
-				}
+				else
+					Timeout.Check(TimeoutWaitingForResponse, "Timed out waiting for text: " + text);
 			}
 
 			return output;
@@ -332,6 +334,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 			var containsData = false;
 
 			var startTime = DateTime.Now;
+
+			Timeout.Start();
 
 			while (!containsData)
 			{
@@ -386,14 +390,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 					dataLine = lastLine;
 					timeInSeconds = DateTime.Now.Subtract(startTime).TotalSeconds;
 				}
-
-				var hasTimedOut = DateTime.Now.Subtract(startTime).TotalSeconds > TimeoutWaitingForResponse;
-				if (hasTimedOut && !containsData)
-				{
-					ConsoleWriteSerialOutput(output);
-
-					Assert.Fail("Timed out waiting for data (" + TimeoutWaitingForResponse + " seconds)");
-				}
+				else
+					Timeout.Check(TimeoutWaitingForResponse, "Timed out waiting for data (" + TimeoutWaitingForResponse + " seconds)");
 			}
 
 			return timeInSeconds;
@@ -418,8 +416,11 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 			var startTime = DateTime.Now;
 
+			Timeout.Start();
+
 			while (powerPinValue != expectedValue)
 			{
+				Timeout.Check(TimeoutWaitingForResponse, "Timed out waiting for simulator pin to switch to " + GetOnOffString(expectedValue));
 				Console.Write(".");
 				powerPinValue = SimulatorDigitalRead(simulatorDigitalPin);
 			}
@@ -483,6 +484,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		#region Data Value Assert Functions
 		public void AssertDataValueEquals(Dictionary<string, string> dataEntry, string dataKey, int expectedValue)
 		{
+			Assert.IsTrue (dataEntry.ContainsKey (dataKey), "The key '" + dataKey + "' is not found in the data entry.");
+
 			var value = Convert.ToInt32(dataEntry[dataKey]);
 
 			Assert.AreEqual(expectedValue, value, "Data value for '" + dataKey + "' key is incorrect: " + value);
@@ -619,6 +622,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 					if (SimulatorClient != null)
 						SimulatorClient.Disconnect();
+
+					Thread.Sleep(DelayAfterDisconnectingFromHardware);
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

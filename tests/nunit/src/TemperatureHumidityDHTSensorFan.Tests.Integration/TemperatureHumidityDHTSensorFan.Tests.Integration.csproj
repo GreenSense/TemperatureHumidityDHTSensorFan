@@ -73,6 +73,7 @@
     <Compile Include="MinimumTemperatureCommandTestHelper.cs" />
     <Compile Include="MinimumTemperatureEEPROMTestFixture.cs" />
     <Compile Include="MinimumTemperatureEEPROMTestHelper.cs" />
+    <Compile Include="TimeoutHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
