@@ -20,7 +20,7 @@ pipeline {
         stage('Prepare') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh prepare.sh'
+                sh 'echo "Skipped prepare script." #sh prepare.sh'
             }
         }
         stage('Init') {
@@ -33,6 +33,12 @@ pipeline {
             when { expression { !shouldSkipBuild() } }
             steps {
                 sh 'sh inject-version.sh'
+            }
+        }
+        stage('Build') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh build-tests.sh'
             }
         }
         stage('Upload') {
