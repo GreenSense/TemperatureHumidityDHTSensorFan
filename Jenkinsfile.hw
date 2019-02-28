@@ -67,7 +67,7 @@ pipeline {
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'git checkout src/TemperatureHumidityDHTSensorFan/TemperatureHumidityDHTSensorFan.ino'
+                sh 'sh clean.sh'
             }
         }
         stage('Graduate') {
