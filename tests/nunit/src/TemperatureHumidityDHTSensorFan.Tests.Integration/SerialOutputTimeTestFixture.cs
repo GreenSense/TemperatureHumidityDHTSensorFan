@@ -38,22 +38,5 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				helper.TestSerialOutputTime();
 			}
 		}
-
-		[Test]
-		public void Test_SerialOutputTime_6Seconds()
-		{
-			using (var helper = new SerialOutputTimeTestHelper())
-			{
-				helper.ReadInterval = 6;
-
-				helper.DevicePort = GetDevicePort();
-				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
-
-				helper.SimulatorPort = GetSimulatorPort();
-				helper.SimulatorBaudRate = GetSimulatorSerialBaudRate();
-
-				helper.TestSerialOutputTime();
-			}
-		}
 	}
 }

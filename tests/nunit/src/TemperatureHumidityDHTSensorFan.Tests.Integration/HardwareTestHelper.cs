@@ -51,14 +51,14 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public void WriteTitleText (string titleText)
         {
-            Console.WriteLine ("========================================");
+            Console.WriteLine ("===");
             Console.WriteLine (titleText);
             Console.WriteLine ("");
         }
 
         public void WriteSubTitleText (string subTitleText)
         {
-            Console.WriteLine ("----------------------------------------");
+            Console.WriteLine ("---");
             Console.WriteLine (subTitleText);
             Console.WriteLine ("");
         }
@@ -195,7 +195,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
             // Give the pin some time at LOW to ensure reset
             Thread.Sleep (10);
 
-            // Cancel the reset
+            // Change the reset trigger pin to an INPUT_PULLUP to cancel the reset
             SimulatorClient.PinMode (ResetTriggerPin, PinMode.INPUT_PULLUP);
 
             // Re-open the connection to the device
@@ -216,7 +216,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         #endregion
 
-        #region Write to Simultor Functions
+        #region Write to Simulator Functions
 
         public virtual void WriteToSimulator (string text)
         {
@@ -229,7 +229,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public string ReadLineFromDevice ()
         {
-            Console.WriteLine ("Reading a line of the output from the device...");
+            //Console.WriteLine ("Reading a line of the output from the device...");
 
             // Read the output
             var output = DeviceClient.ReadLine ();
@@ -242,9 +242,9 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public void ReadFromDeviceAndOutputToConsole ()
         {
-            Console.WriteLine ("");
-            Console.WriteLine ("Reading the output from the device...");
-            Console.WriteLine ("");
+            //Console.WriteLine ("");
+            //Console.WriteLine ("Reading the output from the device...");
+            //Console.WriteLine ("");
 
             // Read the output
             var output = DeviceClient.Read ();
@@ -257,7 +257,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public string ReadLineFromSimulator ()
         {
-            Console.WriteLine ("Reading a line of the output from the simulator...");
+            //Console.WriteLine ("Reading a line of the output from the simulator...");
 
             // Read the output
             var output = SimulatorClient.Client.ReadLine ();
@@ -274,9 +274,11 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         public void ConsoleWriteSerialOutput (string output)
         {
             if (!String.IsNullOrEmpty (output)) {
-                Console.WriteLine ("----- Serial Output From Device");
-                Console.WriteLine (output);
-                Console.WriteLine ("-------------------------------");
+                foreach (var line in output.Trim().Split('\r')) {
+                    if (!String.IsNullOrEmpty (line)) {
+                        Console.WriteLine ("> " + line.Trim ());
+                    }
+                }
             }
         }
 
@@ -329,7 +331,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
                 output += ReadLineFromDevice ();
 
                 if (output.Contains (text)) {
-                    Console.WriteLine ("  Found text: " + text);
+                    //Console.WriteLine ("  Found text: " + text);
 
                     containsText = true;
                 } else
@@ -341,7 +343,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public string WaitForDataLine ()
         {
-            Console.WriteLine ("Waiting for data line");
+            Console.WriteLine ("Waiting for a line of data");
 
             var dataLine = String.Empty;
             var output = String.Empty;
@@ -357,9 +359,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
                 var lastLine = GetLastLine (output);
 
                 if (IsValidDataLine (lastLine)) {
-                    Console.WriteLine ("  Found valid data line");
-                    Console.WriteLine ("    " + lastLine);
-
                     containsData = true;
                     dataLine = lastLine;
                 } else {
@@ -389,9 +388,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
                 var lastLine = GetLastLine (output);
 
                 if (IsValidDataLine (lastLine)) {
-                    Console.WriteLine ("  Found valid data line");
-                    Console.WriteLine ("    " + lastLine);
-
                     containsData = true;
                     dataLine = lastLine;
                     timeInSeconds = DateTime.Now.Subtract (startTime).TotalSeconds;
@@ -531,23 +527,18 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         public bool IsWithinRange (double expectedValue, double actualValue, double allowableMarginOfError)
         {
-            Console.WriteLine ("Checking value is within range...");
-            Console.WriteLine ("  Expected value: " + expectedValue);
-            Console.WriteLine ("  Actual value: " + actualValue);
-            Console.WriteLine ("  Allowable margin of error: " + allowableMarginOfError);
-
             var minAllowableValue = expectedValue - allowableMarginOfError;
             if (minAllowableValue < 0)
                 minAllowableValue = 0;
             var maxAllowableValue = expectedValue + allowableMarginOfError;
 
-            Console.WriteLine ("  Max allowable value: " + maxAllowableValue);
-            Console.WriteLine ("  Min allowable value: " + minAllowableValue);
+            Console.WriteLine ("Checking value '" + actualValue + "' is within range of '" + expectedValue + "'");
+            Console.WriteLine ("  Minimum of '" + minAllowableValue + "' and maximum of '" + maxAllowableValue + "', with '" + allowableMarginOfError + "' as the allowable margin of error");
 
             var isWithinRange = actualValue <= maxAllowableValue &&
-                       actualValue >= minAllowableValue;
+                                actualValue >= minAllowableValue;
 
-            Console.WriteLine ("Is within range: " + isWithinRange);
+            Console.WriteLine ("  Is within range: " + isWithinRange);
 
             return isWithinRange;
         }
@@ -556,9 +547,26 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
         #region Simulator Pin Assert Functions
 
+        public void AssertSimulatorPin (string label, int simulatorDigitalPin, bool expectedValue)
+        {
+            Console.WriteLine ("Checking " + label + " pin...");
+            Console.WriteLine ("  Expected value: " + expectedValue);
+
+            bool powerPinValue = SimulatorDigitalRead (simulatorDigitalPin);
+
+            if (expectedValue)
+                Assert.AreEqual (true, powerPinValue, "The " + label + " pin is off when it should be on.");
+            else
+                Assert.AreEqual (false, powerPinValue, "The " + label + " pin is on when it should be off.");
+
+            Console.WriteLine ("");
+            Console.WriteLine ("The " + label + " pin works as expected.");
+            Console.WriteLine ("");
+        }
+
         public void AssertSimulatorPinForDuration (string label, int simulatorDigitalPin, bool expectedValue, int durationInSeconds)
         {
-            Console.WriteLine ("Checking soil " + label + " pin for specified duration...");
+            Console.WriteLine ("Checking " + label + " pin for specified duration...");
             Console.WriteLine ("  Expected value: " + expectedValue);
             Console.WriteLine ("  Duration: " + durationInSeconds);
 
@@ -577,23 +585,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
                 else
                     Assert.AreEqual (false, powerPinValue, "The " + label + " pin is on when it should be off.");
             }
-
-            Console.WriteLine ("");
-            Console.WriteLine ("The " + label + " pin works as expected.");
-            Console.WriteLine ("");
-        }
-
-        public void AssertSimulatorPin (string label, int simulatorDigitalPin, bool expectedValue)
-        {
-            Console.WriteLine ("Checking " + label + " pin...");
-            Console.WriteLine ("  Expected value: " + expectedValue);
-
-            bool powerPinValue = SimulatorDigitalRead (simulatorDigitalPin);
-
-            if (expectedValue)
-                Assert.AreEqual (true, powerPinValue, "The " + label + " pin is off when it should be on.");
-            else
-                Assert.AreEqual (false, powerPinValue, "The " + label + " pin is on when it should be off.");
 
             Console.WriteLine ("");
             Console.WriteLine ("The " + label + " pin works as expected.");
@@ -640,7 +631,11 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         {
             if (!disposedValue) {
                 if (disposing) {
-                    ConsoleWriteSerialOutput (FullDeviceOutput);
+                    if (TestContext.CurrentContext.Result.State == TestState.Error
+                        || TestContext.CurrentContext.Result.State == TestState.Failure) {
+                        Console.WriteLine ("Complete device serial output...");
+                        ConsoleWriteSerialOutput (FullDeviceOutput);
+                    }
 
                     if (DeviceClient != null)
                         DeviceClient.Close ();
@@ -650,9 +645,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
                     Thread.Sleep (DelayAfterDisconnectingFromHardware);
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
 
                 disposedValue = true;
             }
