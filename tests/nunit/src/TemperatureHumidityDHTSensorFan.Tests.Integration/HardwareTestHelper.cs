@@ -591,23 +591,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
             Console.WriteLine ("");
         }
 
-        public void AssertSimulatorPin (string label, int simulatorDigitalPin, bool expectedValue)
-        {
-            Console.WriteLine ("Checking " + label + " pin...");
-            Console.WriteLine ("  Expected value: " + expectedValue);
-
-            bool powerPinValue = SimulatorDigitalRead (simulatorDigitalPin);
-
-            if (expectedValue)
-                Assert.AreEqual (true, powerPinValue, "The " + label + " pin is off when it should be on.");
-            else
-                Assert.AreEqual (false, powerPinValue, "The " + label + " pin is on when it should be off.");
-
-            Console.WriteLine ("");
-            Console.WriteLine ("The " + label + " pin works as expected.");
-            Console.WriteLine ("");
-        }
-
         #endregion
 
         #region Data Parsing Functions
