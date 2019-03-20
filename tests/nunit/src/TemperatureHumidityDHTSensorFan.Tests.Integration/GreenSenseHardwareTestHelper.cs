@@ -66,10 +66,6 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 				if (output.Contains(expectedText))
 				{
 					wasMessageReceived = true;
-
-					Console.WriteLine("  Message was received");
-
-					ConsoleWriteSerialOutput(output);
 				}
 
 				var hasTimedOut = DateTime.Now.Subtract(startTime).TotalSeconds > TimeoutWaitingForResponse;
