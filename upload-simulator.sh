@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR=$PWD
+
 SIMULATOR_PORT=$1
 
 if [ ! $SIMULATOR_PORT ]; then
