@@ -6,7 +6,7 @@ if [ ! $VERSION_ARGUMENT ]; then
   VERSION=$(cat version.txt)
   BUILD=$(cat buildnumber.txt)
 
-  FULL_VERSION="$VERSION.$BUILD"
+  FULL_VERSION="$VERSION-$BUILD"
 else
   FULL_VERSION=$VERSION_ARGUMENT
 fi
