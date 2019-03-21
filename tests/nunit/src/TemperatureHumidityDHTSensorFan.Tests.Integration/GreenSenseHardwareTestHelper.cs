@@ -1,109 +1,113 @@
 using System;
 using System.Threading;
 using NUnit.Framework;
+
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-	public class GreenSenseHardwareTestHelper : HardwareTestHelper
-	{
-		public int RawValueMarginOfError = 25;
-		public int CalibratedValueMarginOfError = 3;
-		public double TimeErrorMargin = 0.3;
+    public class GreenSenseHardwareTestHelper : HardwareTestHelper
+    {
+        public int RawValueMarginOfError = 25;
+        public int CalibratedValueMarginOfError = 3;
+        public double TimeErrorMargin = 0.3;
 
-		public GreenSenseHardwareTestHelper()
-		{
-		}
+        public GreenSenseHardwareTestHelper ()
+        {
+        }
 
-		#region Enable Devices Functions
-		public override void ConnectDevices(bool enableSimulator)
-		{
-			base.ConnectDevices(enableSimulator);
+        #region Enable Devices Functions
 
-			PrepareDeviceForTest();
-		}
-		#endregion
+        public override void ConnectDevices (bool enableSimulator)
+        {
+            base.ConnectDevices (enableSimulator);
 
-		#region Prepare Device Functions
-		public virtual void PrepareDeviceForTest()
-		{
-			PrepareDeviceForTest(true);
-		}
+            PrepareDeviceForTest ();
+        }
 
-		public virtual void PrepareDeviceForTest(bool consoleWriteDeviceOutput)
-		{
-			ResetDeviceSettings();
+        #endregion
 
-			SetDeviceReadInterval(1);
+        #region Prepare Device Functions
 
-			if (consoleWriteDeviceOutput)
-				ReadFromDeviceAndOutputToConsole();
-		}
-		#endregion
+        public virtual void PrepareDeviceForTest ()
+        {
+            PrepareDeviceForTest (true);
+        }
 
-		#region General Device Command Settings
-		public void SendDeviceCommand(string command)
-		{
-			WriteToDevice(command);
+        public virtual void PrepareDeviceForTest (bool consoleWriteDeviceOutput)
+        {
+            ResetDeviceSettings ();
 
-			WaitForMessageReceived(command);
-		}
+            SetDeviceReadInterval (1);
 
-		public void WaitForMessageReceived(string message)
-		{
-			Console.WriteLine("");
-			Console.WriteLine("Waiting for received message");
-			Console.WriteLine("  Message: " + message);
+            if (consoleWriteDeviceOutput)
+                ReadFromDeviceAndOutputToConsole ();
+        }
 
-			var output = String.Empty;
-			var wasMessageReceived = false;
+        #endregion
 
-			var startTime = DateTime.Now;
+        #region General Device Command Settings
 
-			while (!wasMessageReceived)
-			{
-				output += ReadLineFromDevice();
+        public void SendDeviceCommand (string command)
+        {
+            WriteToDevice (command);
 
-				var expectedText = "Received message: " + message;
-				if (output.Contains(expectedText))
-				{
-					wasMessageReceived = true;
-				}
+            WaitForMessageReceived (command);
+        }
 
-				var hasTimedOut = DateTime.Now.Subtract(startTime).TotalSeconds > TimeoutWaitingForResponse;
-				if (hasTimedOut && !wasMessageReceived)
-				{
-					ConsoleWriteSerialOutput(output);
+        public void WaitForMessageReceived (string message)
+        {
+            Console.WriteLine ("");
+            Console.WriteLine ("Waiting for received message: " + message);
 
-					Assert.Fail("Timed out waiting for message received (" + TimeoutWaitingForResponse + " seconds)");
-				}
-			}
-		}
+            var output = String.Empty;
+            var wasMessageReceived = false;
 
-		#endregion
+            var startTime = DateTime.Now;
 
-		#region Specific Device Command Functions
-		public void ResetDeviceSettings()
-		{
-			var cmd = "X";
+            while (!wasMessageReceived) {
+                output += ReadLineFromDevice ();
 
-			Console.WriteLine("");
-			Console.WriteLine("Resetting device default settings...");
-			Console.WriteLine("  Sending '" + cmd + "' command to device");
-			Console.WriteLine("");
+                var expectedText = "Received message: " + message;
+                if (output.Contains (expectedText)) {
+                    wasMessageReceived = true;
+                }
 
-			SendDeviceCommand(cmd);
-		}
+                var hasTimedOut = DateTime.Now.Subtract (startTime).TotalSeconds > TimeoutWaitingForResponse;
+                if (hasTimedOut && !wasMessageReceived) {
+                    ConsoleWriteSerialOutput (output);
 
-		public void SetDeviceReadInterval(int numberOfSeconds)
-		{
-			var cmd = "I" + numberOfSeconds;
+                    Assert.Fail ("Timed out waiting for message received (" + TimeoutWaitingForResponse + " seconds)");
+                }
+            }
+        }
 
-			Console.WriteLine("");
-			Console.WriteLine("Setting device read interval to " + numberOfSeconds + " second(s)...");
-			Console.WriteLine("  Sending '" + cmd + "' command to device");
-			Console.WriteLine("");
+        #endregion
 
-			SendDeviceCommand(cmd);
-		}
-		#endregion
-	}
+        #region Specific Device Command Functions
+
+        public void ResetDeviceSettings ()
+        {
+            var cmd = "X";
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Resetting device default settings...");
+            Console.WriteLine ("  Sending '" + cmd + "' command to device");
+            Console.WriteLine ("");
+
+            SendDeviceCommand (cmd);
+        }
+
+        public void SetDeviceReadInterval (int numberOfSeconds)
+        {
+            var cmd = "I" + numberOfSeconds;
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Setting device read interval to " + numberOfSeconds + " second(s)...");
+            Console.WriteLine ("  Sending '" + cmd + "' command to device");
+            Console.WriteLine ("");
+
+            SendDeviceCommand (cmd);
+        }
+
+        #endregion
+    }
 }
