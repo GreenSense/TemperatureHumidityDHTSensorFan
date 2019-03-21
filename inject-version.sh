@@ -1,9 +1,15 @@
 echo "Injecting version into sketch..."
 
-VERSION=$(cat version.txt)
-BUILD_NUMBER=$(cat buildnumber.txt)
+VERSION_ARGUMENT=$1
 
-FULL_VERSION="$VERSION-$BUILD_NUMBER"
+if [ ! $VERSION_ARGUMENT ]; then
+  VERSION=$(cat version.txt)
+  BUILD=$(cat buildnumber.txt)
+
+  FULL_VERSION="$VERSION.$BUILD"
+else
+  FULL_VERSION=$VERSION_ARGUMENT
+fi
 
 echo "Version: $FULL_VERSION"
 
