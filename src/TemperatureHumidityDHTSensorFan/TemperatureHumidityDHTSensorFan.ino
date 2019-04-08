@@ -194,7 +194,7 @@ void serialPrintData()
       Serial.print("FO:"); // Fan on
       Serial.print(fanIsOn);
       Serial.print(";");
-      Serial.print("Z:");
+      Serial.print("V:");
       Serial.print(VERSION);
       Serial.print(";;");
       Serial.println();
