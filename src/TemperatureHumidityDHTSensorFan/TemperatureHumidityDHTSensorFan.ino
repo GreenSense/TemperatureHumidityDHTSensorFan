@@ -19,6 +19,7 @@ void setup()
   Serial.begin(9600);
 
   Serial.println("Starting DHT ventilator");
+  Serial.println("");
   
   serialPrintDeviceInfo();
 
