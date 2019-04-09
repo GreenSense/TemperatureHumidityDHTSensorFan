@@ -50,12 +50,12 @@ void takeTemperatureHumidityDHTSensorReading()
 
   if (sensorReadingIsDue && temperatureHumidityDHTSensorIsEnabled)
   {
-    if (isDebugMode)
-      Serial.println("Sensor reading is due");
+    //if (isDebugMode)
+    //  Serial.println("Sensor reading is due");
 
 
-    if (isDebugMode)
-      Serial.println("Preparing to take reading");
+    //if (isDebugMode)
+    //  Serial.println("Preparing to take reading");
 
     lastTemperatureHumidityDHTSensorReadingTime = millis();
     
@@ -71,13 +71,13 @@ void takeTemperatureHumidityDHTSensorReading()
     if (isnan(temperatureValue))
       temperatureValue = 0;
       
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.println("Humidity:");
       Serial.println(humidityValue);
       Serial.println("Temperature:");
       Serial.println(temperatureValue);
-    }
+    }*/
 
     temperatureHumidityDHTSensorReadingHasBeenTaken = true;
   }
@@ -93,13 +93,13 @@ void setTemperature(char* msg)
 
 void setTemperature(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set temperature: ");
     Serial.println(newValue);
   }
 
-  temperatureValue = newValue;
+  temperatureValue = newValue;*/
 }
 
 void setHumidity(char* msg)
@@ -111,11 +111,11 @@ void setHumidity(char* msg)
 
 void setHumidity(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set humidity: ");
     Serial.println(newValue);
-  }
+  }*/
 
   humidityValue = newValue;
 }
@@ -132,11 +132,11 @@ void setupTemperatureHumidityDHTSensorReadingInterval()
 
     temperatureHumidityDHTSensorReadingIntervalInSeconds = getTemperatureHumidityDHTSensorReadingInterval();
   }
-  else
+  /*else
   {
     if (isDebugMode)
       Serial.println("EEPROM read interval value has not been set. Using defaults.");
-  }
+  }*/
 }
 
 void setTemperatureHumidityDHTSensorReadingInterval(char* msg)
@@ -148,11 +148,11 @@ void setTemperatureHumidityDHTSensorReadingInterval(char* msg)
 
 void setTemperatureHumidityDHTSensorReadingInterval(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set sensor reading interval: ");
     Serial.println(newValue);
-  }
+  }*/
 
   EEPROMWriteLong(temperatureHumidityDHTSensorReadingIntervalAddress, newValue);
 
@@ -172,11 +172,11 @@ long getTemperatureHumidityDHTSensorReadingInterval()
     return temperatureHumidityDHTSensorReadingIntervalInSeconds;
   else
   {
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Read interval found in EEPROM: ");
       Serial.println(value);
-    }
+    }*/
 
     return value;
   }
