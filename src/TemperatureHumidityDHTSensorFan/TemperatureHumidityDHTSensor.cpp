@@ -18,7 +18,7 @@ bool temperatureHumidityDHTSensorIsEnabled = true;
 long lastSensorOnTime = 0;
 
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
-long temperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
+long temperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
 long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
 
 int temperatureValue = 0;
@@ -97,9 +97,9 @@ void setTemperature(long newValue)
   {
     Serial.print("Set temperature: ");
     Serial.println(newValue);
-  }
+  }*/
 
-  temperatureValue = newValue;*/
+  temperatureValue = newValue;
 }
 
 void setHumidity(char* msg)
@@ -155,8 +155,11 @@ void setTemperatureHumidityDHTSensorReadingInterval(long newValue)
   }*/
   
   // Set 3 as the minimum interval to avoid issues with reading from the sensor too quickly
-  if (newValue < 3)
-    newValue = 3;
+  if (newValue < 2)
+  {
+    Serial.println("Setting interval to 3s. The DHT sensor cannot support faster readings.");
+    newValue = 2;
+  }
 
   EEPROMWriteLong(temperatureHumidityDHTSensorReadingIntervalAddress, newValue);
 

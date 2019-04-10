@@ -123,6 +123,7 @@ void checkCommand()
         break;
       case 'D':
         temperatureHumidityDHTSensorIsEnabled = false;
+        Serial.println("Disabling DHT sensor.");
         break;
     }
     forceSerialOutput();
