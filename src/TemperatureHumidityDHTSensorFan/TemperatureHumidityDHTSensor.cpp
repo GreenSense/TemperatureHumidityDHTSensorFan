@@ -18,7 +18,7 @@ bool temperatureHumidityDHTSensorIsEnabled = true;
 long lastSensorOnTime = 0;
 
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
-long temperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
+long temperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
 long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
 
 int temperatureValue = 0;
@@ -153,6 +153,10 @@ void setTemperatureHumidityDHTSensorReadingInterval(long newValue)
     Serial.print("Set sensor reading interval: ");
     Serial.println(newValue);
   }*/
+  
+  // Set 3 as the minimum interval to avoid issues with reading from the sensor too quickly
+  if (newValue < 3)
+    newValue = 3;
 
   EEPROMWriteLong(temperatureHumidityDHTSensorReadingIntervalAddress, newValue);
 

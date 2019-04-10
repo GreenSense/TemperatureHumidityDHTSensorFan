@@ -36,7 +36,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         {
             ResetDeviceSettings ();
 
-            SetDeviceReadInterval (1);
+            SetDeviceReadInterval (3);
 
             if (consoleWriteDeviceOutput)
                 ReadFromDeviceAndOutputToConsole ();
