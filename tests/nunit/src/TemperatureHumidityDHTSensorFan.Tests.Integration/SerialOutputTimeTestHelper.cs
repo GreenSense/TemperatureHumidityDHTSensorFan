@@ -17,8 +17,8 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 			ReadFromDeviceAndOutputToConsole();
 
-			// Wait for the first data line before starting
-			WaitUntilDataLine();
+			// Skip some data
+			WaitForData(2);
 
 			// Get the time until the next data line
 			var secondsBetweenDataLines = WaitUntilDataLine();
