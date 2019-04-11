@@ -6,11 +6,11 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 	public class SerialOutputTimeTestFixture : BaseTestFixture
 	{
 		[Test]
-		public void Test_SerialOutputTime_1Second()
+		public void Test_SerialOutputTime_3Seconds()
 		{
 			using (var helper = new SerialOutputTimeTestHelper())
 			{
-				helper.ReadInterval = 1;
+				helper.ReadInterval = 3;
 
 				helper.DevicePort = GetDevicePort();
 				helper.DeviceBaudRate = GetDeviceSerialBaudRate();
