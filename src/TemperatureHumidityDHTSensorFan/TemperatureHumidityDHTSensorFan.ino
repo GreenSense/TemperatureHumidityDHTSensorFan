@@ -49,6 +49,8 @@ void loop()
   ventilateIfNeeded();
 
   serialPrintLoopFooter();
+  
+  delay(1);
 }
 
 void serialPrintDeviceInfo()
