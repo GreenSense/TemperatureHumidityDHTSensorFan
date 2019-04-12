@@ -3,7 +3,7 @@
 BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
 if [ "$BRANCH" = "dev" ];  then
-  git checkout master
+  git checkout master || exit 1
 fi
 
 echo "Graduating master branch to lts branch"
@@ -11,7 +11,7 @@ echo "Graduating master branch to lts branch"
 # Fetch other branches
 git fetch origin --quiet && \
 
-# Pull the lts branch into the dev branch
+# Pull the lts branch into the master branch
 git pull origin lts --quiet && \
 
 # Checkout the lts branch
