@@ -145,8 +145,7 @@ void restoreDefaultSettings()
 /* Serial Output */
 void serialPrintData()
 {
-  bool isTimeToPrintData = lastSerialOutputTime + secondsToMilliseconds(serialOutputIntervalInSeconds) < millis()
-      || lastSerialOutputTime == 0;
+  bool isTimeToPrintData = lastSerialOutputTime + secondsToMilliseconds(serialOutputIntervalInSeconds) < millis();
 
   bool isReadyToPrintData = isTimeToPrintData && temperatureHumidityDHTSensorReadingHasBeenTaken;
 
