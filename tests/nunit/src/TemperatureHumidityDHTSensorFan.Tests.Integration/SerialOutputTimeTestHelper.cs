@@ -3,7 +3,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
 	public class SerialOutputTimeTestHelper : GreenSenseHardwareTestHelper
 	{
-		public int ReadInterval = 1;
+		public int ReadInterval = 3;
 
 		public void TestSerialOutputTime()
 		{
