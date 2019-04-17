@@ -58,7 +58,7 @@ void takeTemperatureHumidityDHTSensorReading()
 
     lastTemperatureHumidityDHTSensorReadingTime = millis();
     
-    delay(dht.getMinimumSamplingPeriod());
+    //delay(dht.getMinimumSamplingPeriod());
     
     humidityValue = dht.getHumidity();
     
