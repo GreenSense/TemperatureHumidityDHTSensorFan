@@ -12,23 +12,24 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 		{
 		}
 
-		[SetUp]
-		public virtual void Initialize()
-		{
-			Console.WriteLine("");
-			Console.WriteLine("====================");
-			Console.WriteLine("Preparing test");
-		}
+        [SetUp]
+        public virtual void Initialize ()
+        {
+            Console.WriteLine ("");
+            Console.WriteLine ("=====");
+            Console.WriteLine ("Preparing test");
+            Console.WriteLine (TestContext.CurrentContext.Test.Name);
+        }
 
 		[TearDown]
 		public virtual void Finish()
 		{
 			HandleFailureFile();
 
-			Console.WriteLine("Finished test");
-			Console.WriteLine("====================");
-			Console.WriteLine("");
-		}
+            Console.WriteLine ("Finished test");
+            Console.WriteLine ("=====");
+            Console.WriteLine ("");
+        }
 
 		public void HandleFailureFile()
 		{
@@ -38,10 +39,9 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 
 			var failureFile = Path.Combine(failuresDir, fixtureName + ".txt");
 
-			if (TestContext.CurrentContext.Result.State == TestState.Error
-			  || TestContext.CurrentContext.Result.State == TestState.Failure)
-			{
-				Console.WriteLine("Test failed.");
+            if (TestContext.CurrentContext.Result.State == TestState.Error
+                || TestContext.CurrentContext.Result.State == TestState.Failure) {
+                Console.WriteLine ("Test failed!");
 
 				Console.WriteLine(failuresDir);
 				Console.WriteLine(fixtureName);

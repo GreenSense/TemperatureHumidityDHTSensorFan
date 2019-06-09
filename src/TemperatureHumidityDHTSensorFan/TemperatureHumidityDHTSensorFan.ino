@@ -9,7 +9,8 @@
 #define SERIAL_MODE_CSV 1
 #define SERIAL_MODE_QUERYSTRING 2
 
-#define VERSION "1-0-0-0"
+#define VERSION "1-0-0-1"
+#define BOARD_TYPE "uno"
 
 int serialMode = SERIAL_MODE_CSV;
 
@@ -18,6 +19,9 @@ void setup()
   Serial.begin(9600);
 
   Serial.println("Starting DHT ventilator");
+  Serial.println("");
+  
+  serialPrintDeviceInfo();
 
   setupTemperatureHumidityDHTSensor();
 
@@ -45,7 +49,23 @@ void loop()
   ventilateIfNeeded();
 
   serialPrintLoopFooter();
+  
+  delay(1);
 }
+
+void serialPrintDeviceInfo()
+{
+  Serial.println("");
+  Serial.println("Family: GreenSense");
+  Serial.println("Group: ventilator");
+  Serial.println("Project: TemperatureHumidityDHTSensorFan");
+  Serial.print("Board: ");
+  Serial.println(BOARD_TYPE);
+  Serial.print("Version: ");
+  Serial.println(VERSION);
+  Serial.println("");
+}
+
 
 /* Commands */
 void checkCommand()
@@ -68,6 +88,9 @@ void checkCommand()
 
     switch (letter)
     {
+      case '#':
+        serialPrintDeviceInfo();
+        break;
       case 'F':
         setFanMode(msg);
         break;
@@ -102,6 +125,7 @@ void checkCommand()
         break;
       case 'D':
         temperatureHumidityDHTSensorIsEnabled = false;
+        Serial.println("Disabling DHT sensor.");
         break;
     }
     forceSerialOutput();
@@ -173,7 +197,7 @@ void serialPrintData()
       Serial.print("FO:"); // Fan on
       Serial.print(fanIsOn);
       Serial.print(";");
-      Serial.print("Z:");
+      Serial.print("V:");
       Serial.print(VERSION);
       Serial.print(";;");
       Serial.println();

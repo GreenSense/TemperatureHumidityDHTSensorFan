@@ -18,7 +18,7 @@ bool temperatureHumidityDHTSensorIsEnabled = true;
 long lastSensorOnTime = 0;
 
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
-long temperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
+long temperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
 long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
 
 int temperatureValue = 0;
@@ -45,21 +45,20 @@ void setupTemperatureHumidityDHTSensor()
 /* Sensor Readings */
 void takeTemperatureHumidityDHTSensorReading()
 {
-  bool sensorReadingIsDue = lastTemperatureHumidityDHTSensorReadingTime + secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) < millis()
-    || lastTemperatureHumidityDHTSensorReadingTime == 0;
+  bool sensorReadingIsDue = lastTemperatureHumidityDHTSensorReadingTime + secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) < millis();
 
   if (sensorReadingIsDue && temperatureHumidityDHTSensorIsEnabled)
   {
-    if (isDebugMode)
-      Serial.println("Sensor reading is due");
+    //if (isDebugMode)
+    //  Serial.println("Sensor reading is due");
 
 
-    if (isDebugMode)
-      Serial.println("Preparing to take reading");
+    //if (isDebugMode)
+    //  Serial.println("Preparing to take reading");
 
     lastTemperatureHumidityDHTSensorReadingTime = millis();
     
-    delay(dht.getMinimumSamplingPeriod());
+    //delay(dht.getMinimumSamplingPeriod());
     
     humidityValue = dht.getHumidity();
     
@@ -71,13 +70,13 @@ void takeTemperatureHumidityDHTSensorReading()
     if (isnan(temperatureValue))
       temperatureValue = 0;
       
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.println("Humidity:");
       Serial.println(humidityValue);
       Serial.println("Temperature:");
       Serial.println(temperatureValue);
-    }
+    }*/
 
     temperatureHumidityDHTSensorReadingHasBeenTaken = true;
   }
@@ -93,11 +92,11 @@ void setTemperature(char* msg)
 
 void setTemperature(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set temperature: ");
     Serial.println(newValue);
-  }
+  }*/
 
   temperatureValue = newValue;
 }
@@ -111,11 +110,11 @@ void setHumidity(char* msg)
 
 void setHumidity(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set humidity: ");
     Serial.println(newValue);
-  }
+  }*/
 
   humidityValue = newValue;
 }
@@ -132,11 +131,11 @@ void setupTemperatureHumidityDHTSensorReadingInterval()
 
     temperatureHumidityDHTSensorReadingIntervalInSeconds = getTemperatureHumidityDHTSensorReadingInterval();
   }
-  else
+  /*else
   {
     if (isDebugMode)
       Serial.println("EEPROM read interval value has not been set. Using defaults.");
-  }
+  }*/
 }
 
 void setTemperatureHumidityDHTSensorReadingInterval(char* msg)
@@ -148,10 +147,17 @@ void setTemperatureHumidityDHTSensorReadingInterval(char* msg)
 
 void setTemperatureHumidityDHTSensorReadingInterval(long newValue)
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Set sensor reading interval: ");
     Serial.println(newValue);
+  }*/
+  
+  // Set 3 as the minimum interval to avoid issues with reading from the sensor too quickly
+  if (newValue < 3)
+  {
+    Serial.println("Setting interval to 3s. The DHT sensor cannot support faster readings.");
+    newValue = 3;
   }
 
   EEPROMWriteLong(temperatureHumidityDHTSensorReadingIntervalAddress, newValue);
@@ -172,11 +178,11 @@ long getTemperatureHumidityDHTSensorReadingInterval()
     return temperatureHumidityDHTSensorReadingIntervalInSeconds;
   else
   {
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Read interval found in EEPROM: ");
       Serial.println(value);
-    }
+    }*/
 
     return value;
   }
@@ -196,8 +202,8 @@ void restoreDefaultTemperatureHumidityDHTSensorReadingIntervalSettings()
 {
   removeEEPROMTemperatureHumidityDHTSensorReadingIntervalIsSetFlag();
 
-  temperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
-  serialOutputIntervalInSeconds = 2;
+  temperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
+  serialOutputIntervalInSeconds = 3;
 
   setTemperatureHumidityDHTSensorReadingInterval(temperatureHumidityDHTSensorReadingIntervalInSeconds);
 }

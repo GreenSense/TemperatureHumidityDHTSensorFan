@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('CleanWS') {
             steps {
-                cleanWs()
+                deleteDir()
             }
         }
         stage('Checkout') {
