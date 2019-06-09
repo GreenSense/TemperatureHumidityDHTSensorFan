@@ -51,9 +51,11 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
             SendDeviceCommand ("T" + SimulatedTemperature);
             SendDeviceCommand ("H" + SimulatedHumidity);
 
-            var data = WaitForData (2);
+            WaitForData (1);
 
-            CheckDataValues (data [data.Length - 1]);
+            var dataEntry = WaitForDataEntry ();
+
+            CheckDataValues (dataEntry);
         }
 
         public void CheckDataValues (Dictionary<string, string> dataEntry)

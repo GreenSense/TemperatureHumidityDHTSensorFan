@@ -135,7 +135,7 @@ void checkCommand()
 
 void forceSerialOutput()
 {
-  lastTemperatureHumidityDHTSensorReadingTime -= secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) + 5;
+  lastSerialOutputTime = millis()-secondsToMilliseconds(serialOutputIntervalInSeconds) + 5;
 }
 
 /* Settings */
