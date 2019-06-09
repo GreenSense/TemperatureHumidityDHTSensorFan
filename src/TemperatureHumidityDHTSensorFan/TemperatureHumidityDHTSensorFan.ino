@@ -133,6 +133,11 @@ void checkCommand()
   delay(1);
 }
 
+void forceSerialOutput()
+{
+  lastTemperatureHumidityDHTSensorReadingTime -= secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) + 5;
+}
+
 /* Settings */
 void restoreDefaultSettings()
 {

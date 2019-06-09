@@ -2,8 +2,6 @@ echo "Building project tests"
 echo "Dir: $PWD"
 
 
-xbuild src/TemperatureHumidityDHTSensorFan.sln /p:Configuration=Release /verbosity:quiet && \
+xbuild src/TemperatureHumidityDHTSensorFan.sln /p:Configuration=Release /verbosity:quiet || exit 1
 
-echo "Finished building project tests." ||
-
-(echo "Failed building project tests!" && exit 1)
+echo "Finished building project tests."
