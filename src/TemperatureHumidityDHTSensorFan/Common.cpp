@@ -86,9 +86,3 @@ float millisecondsToSecondsWithDecimal(int milliseconds)
   return float(milliseconds) / float(1000);
 }
 
-void forceSerialOutput()
-{
-    // Reset the last serial output time 
-    lastSerialOutputTime = millis()-secondsToMilliseconds(serialOutputIntervalInSeconds);
-}
-
