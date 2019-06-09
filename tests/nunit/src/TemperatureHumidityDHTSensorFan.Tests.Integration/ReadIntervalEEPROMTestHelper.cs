@@ -2,43 +2,43 @@
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-	public class ReadIntervalEEPROMTestHelper : GreenSenseVentilatorHardwareTestHelper
-	{
-		public int ReadInterval = 3;
+    public class ReadIntervalEEPROMTestHelper : GreenSenseVentilatorHardwareTestHelper
+    {
+        public int ReadInterval = 5;
 
-		public void TestReadIntervalEEPROM()
-		{
-			WriteTitleText("Starting read interval EEPROM test");
+        public void TestReadIntervalEEPROM ()
+        {
+            WriteTitleText ("Starting read interval EEPROM test");
 
-			Console.WriteLine("Read interval: " + ReadInterval + "%");
-			Console.WriteLine("");
+            Console.WriteLine ("Read interval: " + ReadInterval + "%");
+            Console.WriteLine ("");
 
-			ConnectDevices();
+            ConnectDevices ();
 
-			ResetDeviceSettings ();
+            ResetDeviceSettings ();
 
-			SendReadIntervalCommand();
+            SendReadIntervalCommand ();
 
-			ResetDeviceViaPin ();
+            ResetDeviceViaPin ();
 
-			var dataEntry = WaitForDataEntry ();
+            var dataEntry = WaitForDataEntry ();
 
-			AssertDataValueEquals(dataEntry, "I", ReadInterval);
-		}
+            AssertDataValueEquals (dataEntry, "I", ReadInterval);
+        }
 
-		public void SendReadIntervalCommand()
-		{
-			var command = "I" + ReadInterval;
+        public void SendReadIntervalCommand ()
+        {
+            var command = "I" + ReadInterval;
 
-			WriteParagraphTitleText("Sending read interval command...");
+            WriteParagraphTitleText ("Sending read interval command...");
 
-			SendDeviceCommand(command);
+            SendDeviceCommand (command);
 
-			var dataEntry = WaitForDataEntry();
+            var dataEntry = WaitForDataEntry ();
 
-			WriteParagraphTitleText("Checking read interval value...");
+            WriteParagraphTitleText ("Checking read interval value...");
 
-			AssertDataValueEquals(dataEntry, "I", ReadInterval);
-		}
-	}
+            AssertDataValueEquals (dataEntry, "I", ReadInterval);
+        }
+    }
 }

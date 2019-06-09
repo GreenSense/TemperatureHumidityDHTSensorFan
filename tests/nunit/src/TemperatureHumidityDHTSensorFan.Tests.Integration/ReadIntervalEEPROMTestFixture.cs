@@ -14,10 +14,10 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
     public class ReadIntervalEEPROMTestFixture : BaseTestFixture
     {
         [Test]
-        public void Test_SetReadInterval_3sec ()
+        public void Test_SetReadInterval_5sec ()
         {
             using (var helper = new ReadIntervalEEPROMTestHelper ()) {
-                helper.ReadInterval = 3;
+                helper.ReadInterval = 5;
 
                 helper.DevicePort = GetDevicePort ();
                 helper.DeviceBaudRate = GetDeviceSerialBaudRate ();
@@ -30,10 +30,10 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         }
 
         [Test]
-        public void Test_SetReadInterval_4sec ()
+        public void Test_SetReadInterval_6sec ()
         {
             using (var helper = new ReadIntervalEEPROMTestHelper ()) {
-                helper.ReadInterval = 4;
+                helper.ReadInterval = 6;
 
                 helper.DevicePort = GetDevicePort ();
                 helper.DeviceBaudRate = GetDeviceSerialBaudRate ();
