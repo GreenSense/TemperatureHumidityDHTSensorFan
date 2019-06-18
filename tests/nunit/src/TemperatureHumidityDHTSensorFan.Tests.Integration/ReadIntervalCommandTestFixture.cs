@@ -1,11 +1,4 @@
-﻿using System;
 using NUnit.Framework;
-using duinocom;
-using System.Threading;
-using ArduinoSerialControllerClient;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
@@ -16,7 +9,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         public void Test_SetReadIntervalCommand_5Second ()
         {
             using (var helper = new ReadIntervalCommandTestHelper ()) {
-                helper.ReadInterval = 5;
+                helper.ReadingInterval = 5;
 
                 helper.DevicePort = GetDevicePort ();
                 helper.DeviceBaudRate = GetDeviceSerialBaudRate ();
@@ -32,7 +25,7 @@ namespace TemperatureHumidityDHTSensorFan.Tests.Integration
         public void Test_SetReadIntervalCommand_6Seconds ()
         {
             using (var helper = new ReadIntervalCommandTestHelper ()) {
-                helper.ReadInterval = 6;
+                helper.ReadingInterval = 6;
 
                 helper.DevicePort = GetDevicePort ();
                 helper.DeviceBaudRate = GetDeviceSerialBaudRate ();

@@ -32,7 +32,6 @@
     <Reference Include="System" />
     <Reference Include="nunit.framework">
       <HintPath>..\..\lib\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Package>nunit</Package>
     </Reference>
     <Reference Include="ArduinoSerialControllerClient">
       <HintPath>..\..\lib\ArduinoSerialControllerClient.1.1.1.5\lib\net40\ArduinoSerialControllerClient.dll</HintPath>
@@ -53,28 +52,19 @@
     <Compile Include="FanTestHelper.cs" />
     <Compile Include="SerialOutputTimeTestFixture.cs" />
     <Compile Include="SerialOutputTimeTestHelper.cs" />
-    <Compile Include="ReadIntervalEEPROMTestFixture.cs" />
-    <Compile Include="ReadIntervalEEPROMTestHelper.cs" />
     <Compile Include="FanModeCommandTestFixture.cs" />
     <Compile Include="FanModeCommandTestHelper.cs" />
     <Compile Include="FanMode.cs" />
     <Compile Include="MaximumHumidityCommandTestFixture.cs" />
     <Compile Include="MaximumHumidityCommandTestHelper.cs" />
-    <Compile Include="MaximumHumidityEEPROMTestFixture.cs" />
-    <Compile Include="MaximumHumidityEEPROMTestHelper.cs" />
     <Compile Include="MaximumTemperatureCommandTestFixture.cs" />
     <Compile Include="MaximumTemperatureCommandTestHelper.cs" />
-    <Compile Include="MaximumTemperatureEEPROMTestFixture.cs" />
-    <Compile Include="MaximumTemperatureEEPROMTestHelper.cs" />
     <Compile Include="MinimumHumidityCommandTestFixture.cs" />
     <Compile Include="MinimumHumidityCommandTestHelper.cs" />
-    <Compile Include="MinimumHumidityEEPROMTestFixture.cs" />
-    <Compile Include="MinimumHumidityEEPROMTestHelper.cs" />
     <Compile Include="MinimumTemperatureCommandTestFixture.cs" />
     <Compile Include="MinimumTemperatureCommandTestHelper.cs" />
-    <Compile Include="MinimumTemperatureEEPROMTestFixture.cs" />
-    <Compile Include="MinimumTemperatureEEPROMTestHelper.cs" />
     <Compile Include="TimeoutHelper.cs" />
+    <Compile Include="SerialCommandTestHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

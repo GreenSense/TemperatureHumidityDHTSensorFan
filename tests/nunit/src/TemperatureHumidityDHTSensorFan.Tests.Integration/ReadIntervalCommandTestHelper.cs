@@ -2,27 +2,17 @@
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-    public class ReadIntervalCommandTestHelper : GreenSenseHardwareTestHelper
+    public class ReadIntervalCommandTestHelper : SerialCommandTestHelper
     {
-        public int ReadInterval = 5;
-
-        public ReadIntervalCommandTestHelper ()
-        {
-        }
+        public int ReadingInterval = 5;
 
         public void TestSetReadIntervalCommand ()
         {
-            WriteTitleText ("Starting read interval command test");
+            Letter = "I";
+            Value = ReadingInterval;
+            Label = "reading interval";
 
-            Console.WriteLine ("Read interval: " + ReadInterval);
-
-            ConnectDevices (false);
-
-            SetDeviceReadInterval (ReadInterval);
-
-            var dataEntry = WaitForDataEntry ();
-
-            AssertDataValueEquals (dataEntry, "I", ReadInterval);
+            TestCommand ();
         }
     }
 }
