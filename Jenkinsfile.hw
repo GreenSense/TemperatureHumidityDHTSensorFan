@@ -87,7 +87,7 @@ pipeline {
                 sh 'sh push-version.sh'
             }
         } 
-        stage('CleanWSStart') {
+        stage('CleanWSEnd') {
             steps {
                 deleteDir()
             }
