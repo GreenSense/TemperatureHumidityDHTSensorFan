@@ -1,19 +1,17 @@
 pipeline {
     agent any
     options {
-        disableConcurrentBuilds();
+      skipDefaultCheckout true
     }
     stages {
-        stage('CleanWS') {
+        stage('CleanWSStart') {
             steps {
                 deleteDir()
             }
         }
-        stage('Checkout') {
+        stage('Setup') {
             steps {
-                checkout scm
-
-                shHide( 'git remote set-url origin https://${GHTOKEN}@github.com/GreenSense/TemperatureHumidityDHTSensorFan.git' )
+                shHide( 'git clone --recursive -b $BRANCH_NAME https://${GHTOKEN}@github.com/GreenSense/TemperatureHumidityDHTSensorFan.git .' )
                 sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                 sh "git fetch --no-tags"
                 sh 'git checkout $BRANCH_NAME'
@@ -89,6 +87,11 @@ pipeline {
                 sh 'sh push-version.sh'
             }
         } 
+        stage('CleanWSStart') {
+            steps {
+                deleteDir()
+            }
+        }
     }
     post {
         success() {
@@ -101,6 +104,7 @@ pipeline {
         }
         failure() {
           sh 'sh rollback.sh'
+          deleteDir()
           emailext (
               subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
               body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
