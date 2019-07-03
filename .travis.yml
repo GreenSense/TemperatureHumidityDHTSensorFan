@@ -12,6 +12,7 @@ matrix:
 
     - language: csharp
       before_script:
+        - git checkout $TRAVIS_BRANCH
         - sh prepare-tests.sh
         - sh init-tests.sh
       script:
