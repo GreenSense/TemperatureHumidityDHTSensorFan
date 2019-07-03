@@ -78,10 +78,10 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
     echo "  From the web (GitHub release)"
     
     # Download the package from the web    
-  	wget -nv https://github.com/$PACKAGE_OWNER/$PACKAGE_NAME/releases/download/v$PACKAGE_VERSION$POSTFIX/$PACKAGE_NAME.$PACKAGE_VERSION$POSTFIX.zip -O $PACKAGE_FILE_EXT || exit 1
+  	wget -q https://github.com/$PACKAGE_OWNER/$PACKAGE_NAME/releases/download/v$PACKAGE_VERSION$POSTFIX/$PACKAGE_NAME.$PACKAGE_VERSION$POSTFIX.zip -O $PACKAGE_FILE_EXT || exit 1
 
     # Unzip the package
-	  unzip -v -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_FOLDER/" || exit 1
+	  unzip -qq -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_FOLDER/" || exit 1
 	  
 	  if [ "$IS_IN_INDEX" = "1" ]; then
       # Make the GreenSense index lib directory if necessary
