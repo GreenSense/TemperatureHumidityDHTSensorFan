@@ -10,7 +10,7 @@ matrix:
         - sh inject-version.sh
         - sh build-sketch.sh
 
-    - language: c-sharp
+    - language: csharp
       before_script:
         - sh prepare-tests.sh
         - sh init-tests.sh
