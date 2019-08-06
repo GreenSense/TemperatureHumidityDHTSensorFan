@@ -7,6 +7,7 @@ extern int humidityValue;
 extern long lastTemperatureHumidityDHTSensorReadingTime;
 extern long temperatureHumidityDHTSensorReadingIntervalInSeconds;
 extern int temperatureHumidityDHTSensorReadIntervalIsSetFlagAddress;
+extern int minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds;
 
 extern int drySoilMoistureCalibrationValue;
 extern int wetSoilMoistureCalibrationValue;

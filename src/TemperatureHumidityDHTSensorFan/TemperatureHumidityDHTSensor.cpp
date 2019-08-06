@@ -20,6 +20,7 @@ long lastSensorOnTime = 0;
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
 long temperatureHumidityDHTSensorReadingIntervalInSeconds = 5;
 long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
+int minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
 
 int temperatureValue = 0;
 int humidityValue = 0;
@@ -47,16 +48,24 @@ void takeTemperatureHumidityDHTSensorReading()
 {
   bool sensorReadingIsDue = lastTemperatureHumidityDHTSensorReadingTime + secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) < millis();
 
+  /*Serial.print("Sensor reading due: ");
+  Serial.println(sensorReadingIsDue);
+  Serial.print("Last reading time: ");
+  Serial.println(lastTemperatureHumidityDHTSensorReadingTime);
+  Serial.print("Interval: ");
+  Serial.println(temperatureHumidityDHTSensorReadingIntervalInSeconds * 1000);
+  Serial.print("Millis: ");
+  Serial.println(millis());*/
+
   if (sensorReadingIsDue && temperatureHumidityDHTSensorIsEnabled)
   {
-    //if (isDebugMode)
-    //  Serial.println("Sensor reading is due");
+    if (isDebugMode)
+      Serial.println("Sensor reading is due");
 
 
     //if (isDebugMode)
     //  Serial.println("Preparing to take reading");
 
-    lastTemperatureHumidityDHTSensorReadingTime = millis();
     
     //delay(dht.getMinimumSamplingPeriod());
     
@@ -79,6 +88,7 @@ void takeTemperatureHumidityDHTSensorReading()
     }*/
 
     temperatureHumidityDHTSensorReadingHasBeenTaken = true;
+    lastTemperatureHumidityDHTSensorReadingTime = millis();
   }
 }
 
@@ -153,11 +163,13 @@ void setTemperatureHumidityDHTSensorReadingInterval(long newValue)
     Serial.println(newValue);
   }*/
   
-  // Set 5 as the minimum interval to avoid issues with reading from the sensor too quickly
-  if (newValue < 5)
+  // Set minimum interval to avoid issues with reading from the sensor too quickly
+  if (newValue < minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds)
   {
-    Serial.println("Setting interval to 5s. The DHT sensor cannot support faster readings.");
-    newValue = 5;
+    Serial.print("Setting interval to ");
+    Serial.print(minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds);
+    Serial.println(" seconds. The DHT sensor cannot support faster readings.");
+    newValue = minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds;
   }
 
   EEPROMWriteLong(temperatureHumidityDHTSensorReadingIntervalAddress, newValue);

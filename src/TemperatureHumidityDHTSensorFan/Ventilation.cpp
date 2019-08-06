@@ -34,10 +34,10 @@ int fanMode = FAN_MODE_AUTO;
 /* Setup */
 void setupVentilation()
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.println("Setting up ventilation...");
-  }
+  }*/
 
   pinMode(FAN_PIN, OUTPUT);
 
@@ -53,8 +53,8 @@ void setupMaxTemperature()
 
   if (eepromIsSet)
   {
-    if (isDebugMode)
-    	Serial.println("EEPROM max temperature value has been set. Loading.");
+    //if (isDebugMode)
+    //	Serial.println("EEPROM max temperature value has been set. Loading.");
 
     maxTemperature = getMaxTemperature();
   }
@@ -73,18 +73,18 @@ void setupMinTemperature()
 
   if (eepromIsSet)
   {
-    if (isDebugMode)
-    	Serial.println("EEPROM min temperature value has been set. Loading.");
+    //if (isDebugMode)
+    //	Serial.println("EEPROM min temperature value has been set. Loading.");
 
     minTemperature = getMinTemperature();
   }
-  else
-  {
-    if (isDebugMode)
-      Serial.println("EEPROM min temperature value has not been set. Using defaults.");
+  //else
+  //{
+    //if (isDebugMode)
+    //  Serial.println("EEPROM min temperature value has not been set. Using defaults.");
     
     //setMinTemperature(minTemperature);
-  }
+  //}
 }
 
 void setupMaxHumidity()
@@ -93,18 +93,18 @@ void setupMaxHumidity()
 
   if (eepromIsSet)
   {
-    if (isDebugMode)
-    	Serial.println("EEPROM max humidity value has been set. Loading.");
+    //if (isDebugMode)
+    //	Serial.println("EEPROM max humidity value has been set. Loading.");
 
     maxHumidity = getMaxHumidity();
   }
-  else
-  {
-    if (isDebugMode)
-      Serial.println("EEPROM max humidity value has not been set. Using defaults.");
+  //else
+  //{
+  //  if (isDebugMode)
+  //    Serial.println("EEPROM max humidity value has not been set. Using defaults.");
     
     //setMaxHumidity(maxHumidity);
-  }
+  //}
 }
 
 void setupMinHumidity()
@@ -113,27 +113,27 @@ void setupMinHumidity()
 
   if (eepromIsSet)
   {
-    if (isDebugMode)
-    	Serial.println("EEPROM min humidity value has been set. Loading.");
+    //if (isDebugMode)
+    //	Serial.println("EEPROM min humidity value has been set. Loading.");
 
     minHumidity = getMinHumidity();
   }
-  else
-  {
-    if (isDebugMode)
-      Serial.println("EEPROM min humidity value has not been set. Using defaults.");
+  //else
+  //{
+  //  if (isDebugMode)
+  //    Serial.println("EEPROM min humidity value has not been set. Using defaults.");
     
     //setMinHumidity(minHumidity);
-  }
+  //}
 }
 
 /* Ventilation */
 void ventilateIfNeeded()
 {
-  if (isDebugMode)
-  {
-    Serial.println("Ventilating (if needed)");
-  }
+  //if (isDebugMode)
+  //{
+  //  Serial.println("Ventilating (if needed)");
+  //}
 
   if (fanMode == FAN_MODE_AUTO)
   {
@@ -144,16 +144,16 @@ void ventilateIfNeeded()
     {
       if (!ventilationIsNeeded)
       {
-        if (isDebugMode)
-          Serial.println("  Fan is turning off");
+        //if (isDebugMode)
+        //  Serial.println("  Fan is turning off");
         
         fanOff();
       }
     }
     else if (ventilationIsNeeded && fanIsReady)
     {
-      if (isDebugMode)
-        Serial.println("  Fan is turning on");
+      //if (isDebugMode)
+      //  Serial.println("  Fan is turning on");
       fanOn();
     }
   }
@@ -171,45 +171,45 @@ void ventilateIfNeeded()
 
 bool checkVentilationIsNeeded()
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.println("Checking whether ventilation is needed...");
-  }
+  }*/
 
   bool readingHasBeenTaken = lastTemperatureHumidityDHTSensorReadingTime > 0;
     
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Reading has been taken: ");
     Serial.println(readingHasBeenTaken);
-  }
+  }*/
   
   bool temperatureIsOutsideRange = temperatureValue >= maxTemperature ||
     temperatureValue <= minTemperature;
     
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Temperature is outside range: ");
     Serial.println(temperatureIsOutsideRange);
-  }
+  }*/
   
   bool humidityIsOutsideRange = humidityValue >= maxHumidity ||
     humidityValue <= minHumidity;
     
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Humidity is outside range: ");
     Serial.println(humidityIsOutsideRange);
-  }
+  }*/
   
   bool ventilationIsNeeded = readingHasBeenTaken &&
     (temperatureIsOutsideRange || humidityIsOutsideRange);
   
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Ventilation is needed: ");
     Serial.println(ventilationIsNeeded);
-  }
+  }*/
   
   return ventilationIsNeeded;
 }
@@ -271,11 +271,11 @@ void setMaxTemperature(int newMaxTemperature)
 {
   maxTemperature = newMaxTemperature;
 
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Setting max temperature to EEPROM: ");
     Serial.println(maxTemperature);
-  }
+  }*/
 
   EEPROM.write(maxTemperatureEEPROMAddress, maxTemperature);
 
@@ -293,11 +293,11 @@ int getMaxTemperature()
   {
     int maxTemperature = value;
 
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Max temperature found in EEPROM: ");
       Serial.println(maxTemperature);
-    }
+    }*/
 
     return maxTemperature;
   }
@@ -319,11 +319,11 @@ void setMinTemperature(int newMinTemperature)
 {
   minTemperature = newMinTemperature;
 
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Setting min temperature to EEPROM: ");
     Serial.println(minTemperature);
-  }
+  }*/
 
   EEPROM.write(minTemperatureEEPROMAddress, newMinTemperature);
   
@@ -339,13 +339,13 @@ int getMinTemperature()
     return minTemperature;
   else
   {
-    int minTemperature = value; // Must multiply by 4 to get the original value
+    int minTemperature = value;
 
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Min temperature found in EEPROM: ");
       Serial.println(minTemperature);
-    }
+    }*/
 
     return minTemperature;
   }
@@ -367,11 +367,11 @@ void setMaxHumidity(int newMaxHumidity)
 {
   maxHumidity = newMaxHumidity;
 
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Setting max temperature to EEPROM: ");
     Serial.println(maxHumidity);
-  }
+  }*/
 
   EEPROM.write(maxHumidityEEPROMAddress, newMaxHumidity);
   
@@ -389,11 +389,11 @@ int getMaxHumidity()
   {
     int maxHumidity = value; // Must multiply by 4 to get the original value
 
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Max humidity found in EEPROM: ");
       Serial.println(maxHumidity);
-    }
+    }*/
 
     return maxHumidity;
   }
@@ -412,11 +412,11 @@ void setMinHumidity(int newMinHumidity)
 {
   minHumidity = newMinHumidity;
 
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("Setting min humidity to EEPROM: ");
     Serial.println(minHumidity);
-  }
+  }*/
 
   EEPROM.write(minHumidityEEPROMAddress, newMinHumidity);
   
@@ -434,11 +434,11 @@ int getMinHumidity()
   {
     int minHumidity = value; // Must multiply by 4 to get the original value
 
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.print("Min humidity found in EEPROM: ");
       Serial.println(minHumidity);
-    }
+    }*/
 
     return minHumidity;
   }
@@ -447,14 +447,14 @@ int getMinHumidity()
 /* Restore defaults */
 void restoreDefaultVentilationSettings()
 {
-  Serial.println("Reset default settings");
+  //Serial.println("Reset default settings");
 
   restoreDefaultMaxTemperature();
 }
 
 void restoreDefaultMaxTemperature()
 {
-  Serial.println("Reset max temperature");
+  //Serial.println("Reset max temperature");
 
   removeMaxTemperatureEEPROMIsSetFlag();
 

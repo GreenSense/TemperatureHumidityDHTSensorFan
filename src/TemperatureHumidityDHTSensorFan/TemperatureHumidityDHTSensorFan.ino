@@ -6,13 +6,12 @@
 #include "TemperatureHumidityDHTSensor.h"
 #include "Ventilation.h"
 
-#define SERIAL_MODE_CSV 1
-#define SERIAL_MODE_QUERYSTRING 2
+//#define SERIAL_MODE_CSV 1
+//#define SERIAL_MODE_QUERYSTRING 2
+//int serialMode = SERIAL_MODE_CSV;
 
 #define VERSION "1-0-0-1"
 #define BOARD_TYPE "uno"
-
-int serialMode = SERIAL_MODE_CSV;
 
 void setup()
 {
@@ -73,10 +72,10 @@ void serialPrintDeviceInfo()
 /* Commands */
 void checkCommand()
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.println("Checking incoming serial commands");
-  }
+  }*/
 
   if (checkMsgReady())
   {
@@ -138,7 +137,7 @@ void checkCommand()
 
 void forceSerialOutput()
 {
-  lastSerialOutputTime = millis()-secondsToMilliseconds(serialOutputIntervalInSeconds) + 5;
+  lastSerialOutputTime = millis()-secondsToMilliseconds(serialOutputIntervalInSeconds) + minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds;
 }
 
 /* Settings */
@@ -159,15 +158,16 @@ void serialPrintData()
 
   if (isReadyToPrintData)
   {
-    if (isDebugMode)
+    /*if (isDebugMode)
     {
       Serial.println("Printing serial data");
-    }
+    }*/
     
     bool ventilationIsNeeded = checkVentilationIsNeeded();
 
-    if (serialMode == SERIAL_MODE_CSV)
-    {
+    // TODO: Remove if not needed. Should be obsolete
+    //if (serialMode == SERIAL_MODE_CSV)
+    //{
       Serial.print("D;"); // This prefix indicates that the line contains data.
       Serial.print("A:");
       Serial.print((int)temperatureValue);
@@ -209,7 +209,8 @@ void serialPrintData()
       Serial.print(VERSION);
       Serial.print(";;");
       Serial.println();
-    }
+    //}
+    // TODO: Remove if not needed. Should be obsolete
     /*else
     {
       Serial.print("raw=");

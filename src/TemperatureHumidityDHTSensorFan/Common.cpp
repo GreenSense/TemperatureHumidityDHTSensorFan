@@ -14,7 +14,7 @@ int loopNumber = 0;
 
 void serialPrintLoopHeader()
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.println("==========");
     Serial.print("Start Loop: ");
@@ -23,18 +23,18 @@ void serialPrintLoopHeader()
     Serial.print(millisecondsToSecondsWithDecimal(millis()));
     Serial.println(" seconds");
     Serial.println("");
-  }
+  }*/
 }
 
 void serialPrintLoopFooter()
 {
-  if (isDebugMode)
+  /*if (isDebugMode)
   {
     Serial.print("End Loop: ");
     Serial.println(loopNumber);
     Serial.println("==========");
     Serial.println("");
-  }
+  }*/
 }
 
 void EEPROMWriteLong(int address, long value)
