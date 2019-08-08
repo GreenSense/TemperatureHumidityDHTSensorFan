@@ -20,7 +20,7 @@ long lastSensorOnTime = 0;
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
 long temperatureHumidityDHTSensorReadingIntervalInSeconds = 5;
 long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
-int minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds = 2;
+int minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
 
 int temperatureValue = 0;
 int humidityValue = 0;
