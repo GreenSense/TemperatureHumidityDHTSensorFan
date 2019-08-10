@@ -16,8 +16,8 @@ extern int maxHumidity;
 extern int minHumidity;
 
 extern bool fanIsOn;
-extern long fanStartTime;
-extern long lastFanFinishTime;
+extern unsigned long fanStartTime;
+extern unsigned long lastFanFinishTime;
 extern int fanMode;
 
 extern int maxTemperatureIsSetEEPROMFlagAddress;

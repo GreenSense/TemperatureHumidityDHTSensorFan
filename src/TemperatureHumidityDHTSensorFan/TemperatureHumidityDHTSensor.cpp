@@ -15,11 +15,11 @@ DHT dht;
 #define temperatureHumidityDHTSensorPowerPin 12
 
 bool temperatureHumidityDHTSensorIsEnabled = true;
-long lastSensorOnTime = 0;
+unsigned long lastSensorOnTime = 0;
 
 bool temperatureHumidityDHTSensorReadingHasBeenTaken = false;
 long temperatureHumidityDHTSensorReadingIntervalInSeconds = 5;
-long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
+unsigned long lastTemperatureHumidityDHTSensorReadingTime = 0; // Milliseconds
 int minimumTemperatureHumidityDHTSensorReadingIntervalInSeconds = 3;
 
 int temperatureValue = 0;

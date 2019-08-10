@@ -14,8 +14,8 @@ int maxHumidity = 60;
 int minHumidity = 1;
 
 bool fanIsOn = 0;
-long fanStartTime = 0;
-long lastFanFinishTime = 0;
+unsigned long fanStartTime = 0;
+unsigned long lastFanFinishTime = 0;
 
 int fanMode = FAN_MODE_AUTO;
 
