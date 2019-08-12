@@ -46,7 +46,7 @@ void setupTemperatureHumidityDHTSensor()
 /* Sensor Readings */
 void takeTemperatureHumidityDHTSensorReading()
 {
-  bool sensorReadingIsDue = lastTemperatureHumidityDHTSensorReadingTime + secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds) < millis();
+  bool sensorReadingIsDue = millis() - lastTemperatureHumidityDHTSensorReadingTime >= secondsToMilliseconds(temperatureHumidityDHTSensorReadingIntervalInSeconds);
 
   /*Serial.print("Sensor reading due: ");
   Serial.println(sensorReadingIsDue);

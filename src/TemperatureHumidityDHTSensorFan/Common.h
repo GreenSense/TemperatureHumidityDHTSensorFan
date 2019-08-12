@@ -3,7 +3,7 @@
 
 extern const int ANALOG_MAX;
 
-extern long lastSerialOutputTime; // Milliseconds
+extern unsigned long lastSerialOutputTime; // Milliseconds
 extern long serialOutputIntervalInSeconds;
 
 extern bool isDebugMode;
@@ -18,7 +18,7 @@ long EEPROMReadLong(int address);
 
 void setEEPROMFlag(int eepromFlagAddress);
 
-long secondsToMilliseconds(int seconds);
+unsigned long secondsToMilliseconds(int seconds);
 float millisecondsToSecondsWithDecimal(int milliseconds);
 
 void forceSerialOutput();
