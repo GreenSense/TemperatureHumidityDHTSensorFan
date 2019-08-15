@@ -35,7 +35,8 @@ void loop()
 // Disabled. Used for debugging
 //  Serial.print(".");
 
-  loopNumber++;
+  if (isDebugMode)
+    loopNumber++;
 
   serialPrintLoopHeader();
 
