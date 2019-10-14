@@ -2,11 +2,11 @@
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-	public class GreenSenseVentilatorHardwareTestHelper : GreenSenseHardwareTestHelper
+	public class GrowSenseVentilatorHardwareTestHelper : GrowSenseHardwareTestHelper
 	{
 		public int SimulatorFanPin = 2;
 
-		public GreenSenseVentilatorHardwareTestHelper()
+		public GrowSenseVentilatorHardwareTestHelper()
 		{
 		}
 

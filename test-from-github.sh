@@ -23,7 +23,7 @@ mkdir -p $TEMPORARY_DIR
 
 cd $TEMPORARY_DIR
 
-git clone http://github.com/GreenSense/TemperatureHumidityDHTSensorFan -b $BRANCH && \
+git clone http://github.com/GrowSense/TemperatureHumidityDHTSensorFan -b $BRANCH && \
 
 cd TemperatureHumidityDHTSensorFan && \
 sh init.sh && \

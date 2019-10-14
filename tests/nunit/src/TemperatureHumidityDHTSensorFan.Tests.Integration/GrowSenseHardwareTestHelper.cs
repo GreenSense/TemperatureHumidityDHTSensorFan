@@ -4,13 +4,13 @@ using NUnit.Framework;
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-    public class GreenSenseHardwareTestHelper : HardwareTestHelper
+    public class GrowSenseHardwareTestHelper : HardwareTestHelper
     {
         public int RawValueMarginOfError = 25;
         public int CalibratedValueMarginOfError = 3;
         public double TimeErrorMargin = 0.3;
 
-        public GreenSenseHardwareTestHelper ()
+        public GrowSenseHardwareTestHelper ()
         {
         }
 

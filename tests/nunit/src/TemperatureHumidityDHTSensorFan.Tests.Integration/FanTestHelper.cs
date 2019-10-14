@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace TemperatureHumidityDHTSensorFan.Tests.Integration
 {
-    public class FanTestHelper : GreenSenseVentilatorHardwareTestHelper
+    public class FanTestHelper : GrowSenseVentilatorHardwareTestHelper
     {
         public FanMode FanCommand = FanMode.Auto;
         public int SimulatedTemperature = 50;

@@ -44,10 +44,10 @@
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadIntervalCommandTestFixture.cs" />
-    <Compile Include="GreenSenseHardwareTestHelper.cs" />
+    <Compile Include="GrowSenseHardwareTestHelper.cs" />
     <Compile Include="HardwareTestHelper.cs" />
     <Compile Include="ReadIntervalCommandTestHelper.cs" />
-    <Compile Include="GreenSenseVentilatorHardwareTestHelper.cs" />
+    <Compile Include="GrowSenseVentilatorHardwareTestHelper.cs" />
     <Compile Include="FanTestFixture.cs" />
     <Compile Include="FanTestHelper.cs" />
     <Compile Include="SerialOutputTimeTestFixture.cs" />
